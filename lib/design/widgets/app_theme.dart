@@ -1,3 +1,4 @@
+import 'package:effective_test/common/constants/theme/app_colors_schemes.dart';
 import 'package:effective_test/common/constants/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -30,11 +31,13 @@ class _AppThemeState extends State<AppTheme> {
 
     final theme = Theme.of(context);
     final AppTextTheme textTheme;
+    final AppColorScheme colorScheme;
 
     switch (theme.brightness) {
       case Brightness.dark:
       case Brightness.light:
-        textTheme = const DarkAppTextTheme();
+        colorScheme = DarkColorSchemes();
+        textTheme = DarkAppTextTheme();
     }
 
     if (_previousBrightness != theme.brightness) {
@@ -42,6 +45,7 @@ class _AppThemeState extends State<AppTheme> {
       _appThemeData = AppThemeData(
         flutterTheme: theme,
         textTheme: textTheme,
+        colorScheme: colorScheme,
       );
     }
   }
@@ -64,25 +68,30 @@ class _InheritedAppTheme extends InheritedWidget {
 class AppThemeData {
   final ThemeData flutterTheme;
   final AppTextTheme textTheme;
+  final AppColorScheme colorScheme;
 
   const AppThemeData({
     required this.flutterTheme,
     required this.textTheme,
+    required this.colorScheme,
   });
 
   factory AppThemeData.fallback() {
     final theme = ThemeData.fallback();
     final AppTextTheme textTheme;
+    final AppColorScheme colorScheme;
 
     switch (theme.brightness) {
       case Brightness.dark:
       case Brightness.light:
-        textTheme = const DarkAppTextTheme();
+        colorScheme = DarkColorSchemes();
+        textTheme = DarkAppTextTheme();
     }
 
     return AppThemeData(
       flutterTheme: theme,
       textTheme: textTheme,
+      colorScheme: colorScheme,
     );
   }
 }

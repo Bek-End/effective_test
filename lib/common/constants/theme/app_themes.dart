@@ -1,26 +1,35 @@
-import 'package:effective_test/common/constants/app_colors.dart';
+import 'package:effective_test/common/constants/theme/app_colors_schemes.dart';
 import 'package:effective_test/common/constants/theme/app_text_theme.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppThemes {
   static ThemeData get darkTheme {
-    const textTheme = DarkAppTextTheme();
+    final textTheme = DarkAppTextTheme();
+    final colorSchemes = DarkColorSchemes();
 
     return ThemeData(
       useMaterial3: true,
-      scaffoldBackgroundColor: AppColors.black,
+      scaffoldBackgroundColor: colorSchemes.basic.shade0,
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.black,
+        backgroundColor: colorSchemes.basic.shade0,
         titleTextStyle: textTheme.title1,
-        iconTheme: const IconThemeData(color: AppColors.white),
+        iconTheme: IconThemeData(color: colorSchemes.basic.shade0),
       ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         showUnselectedLabels: true,
-        backgroundColor: AppColors.black,
+        backgroundColor: colorSchemes.basic.shade0,
         type: BottomNavigationBarType.fixed,
-        unselectedItemColor: AppColors.grey6,
-        selectedItemColor: AppColors.blue,
+        unselectedItemColor: colorSchemes.basic.shade6,
+        selectedItemColor: colorSchemes.blue,
+        unselectedIconTheme: IconThemeData(color: colorSchemes.basic.shade6),
+        selectedIconTheme: IconThemeData(color: colorSchemes.blue),
+        unselectedLabelStyle: textTheme.tabText.copyWith(
+          color: colorSchemes.basic.shade6,
+        ),
+        selectedLabelStyle: textTheme.tabText.copyWith(
+          color: colorSchemes.blue,
+        ),
       ),
     );
   }

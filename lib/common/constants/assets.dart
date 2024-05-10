@@ -41,4 +41,7 @@ class _Icons extends _AssetsHolder {
 
 class _Images extends _AssetsHolder {
   const _Images() : super('assets/images');
+
+  List<String> get constImages =>
+      List.generate(3, (index) => '$basePath/$index.png');
 }
