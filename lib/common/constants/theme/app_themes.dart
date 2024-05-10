@@ -16,6 +16,16 @@ abstract class AppThemes {
         titleTextStyle: textTheme.title1,
         iconTheme: IconThemeData(color: colorSchemes.basic.shade0),
       ),
+      dividerColor: colorSchemes.basic.shade4,
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: colorSchemes.basic,
+      ),
+      listTileTheme: ListTileThemeData(
+        titleTextStyle: textTheme.title3,
+        subtitleTextStyle: textTheme.text2.copyWith(
+          color: colorSchemes.basic.shade5,
+        ),
+      ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         showUnselectedLabels: true,
         backgroundColor: colorSchemes.basic.shade0,
