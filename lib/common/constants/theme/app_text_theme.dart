@@ -14,10 +14,11 @@ class AppTextTheme extends TextTheme {
   TextStyle get title4 => AppTextStyles.title4.copyWith(color: _primaryColor);
   TextStyle get text1 => AppTextStyles.text1.copyWith(color: _primaryColor);
   TextStyle get text2 => AppTextStyles.text2.copyWith(color: _primaryColor);
-  TextStyle get buttonText => AppTextStyles.buttonText.copyWith(color: _primaryColor);
+  TextStyle get buttonText =>
+      AppTextStyles.buttonText.copyWith(color: _primaryColor);
   TextStyle get tabText => AppTextStyles.tabText.copyWith(color: _primaryColor);
 }
 
 class DarkAppTextTheme extends AppTextTheme {
-  const DarkAppTextTheme() : super(primaryColor: AppColors.white);
+  DarkAppTextTheme() : super(primaryColor: AppColors.darkBasic.shadeF);
 }
