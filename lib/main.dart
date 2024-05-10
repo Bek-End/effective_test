@@ -1,6 +1,8 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:effective_test/common/constants/theme/app_themes.dart';
 import 'package:effective_test/common/di/bloc_scope.dart';
 import 'package:effective_test/common/di/di.dart';
+import 'package:effective_test/design/widgets/app_theme.dart';
 import 'package:effective_test/domain/repositories/local_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,17 +28,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Effective test',
-      theme: ThemeData(useMaterial3: false),
-      darkTheme: ThemeData.dark(useMaterial3: false),
+      theme: AppThemes.darkTheme,
       home: const NavBar(),
       builder: (context, child) {
-        return Overlay(initialEntries: [
-          OverlayEntry(builder: (context) {
-            FToast().init(context);
-            return child ?? const SizedBox.shrink();
-          }),
-        ]);
+        return AppTheme(
+          child: Overlay(initialEntries: [
+            OverlayEntry(builder: (context) {
+              FToast().init(context);
+              return child ?? const SizedBox.shrink();
+            }),
+          ]),
+        );
       },
     );
   }
@@ -51,6 +55,7 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   static const List<Widget> _widgetOptions = <Widget>[
+    Center(child: Text('Index 0: ')),
     Center(child: Text('Index 1: Отели')),
     Center(child: Text('Index 2: Короче')),
     Center(child: Text('Index 3: Подписки')),
