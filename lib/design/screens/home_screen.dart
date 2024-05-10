@@ -1,10 +1,24 @@
 import 'package:effective_test/common/constants/assets.dart';
 import 'package:effective_test/design/widgets/app_theme.dart';
+import 'package:effective_test/design/widgets/bottom_sheet_with_header.dart';
+import 'package:effective_test/design/widgets/target_point_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  void _showBottomSheet() {
+    BottomSheetWithHeader.show(
+      context: context,
+      content: const TargetPointWidget(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +54,24 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    SvgPicture.asset(Assets.icons.search),
+                    SvgPicture.asset(
+                      Assets.icons.search,
+                      colorFilter: ColorFilter.mode(
+                        colorScheme.basic,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          TextField(),
-                          Divider(),
-                          TextField(),
+                          const TextField(),
+                          const Divider(),
+                          TextField(
+                            readOnly: true,
+                            onTap: _showBottomSheet,
+                          ),
                         ],
                       ),
                     ),
