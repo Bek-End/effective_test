@@ -20,6 +20,7 @@ abstract class AppTextStyles {
   );
   static const TextStyle title4 = TextStyle(
     fontFamily: _sfProDisplay,
+    fontStyle: FontStyle.italic,
     fontSize: 14.0,
   );
   static const TextStyle text1 = TextStyle(
