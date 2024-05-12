@@ -2,6 +2,7 @@ import 'package:effective_test/common/constants/assets.dart';
 import 'package:effective_test/design/widgets/app_theme.dart';
 import 'package:effective_test/design/widgets/bottom_sheet_with_header.dart';
 import 'package:effective_test/design/widgets/target_point_widget.dart';
+import 'package:effective_test/design/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -66,9 +67,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const TextField(),
+                          TextFieldWidget(
+                            hint: 'Откуда - Москва',
+                            controller: TextEditingController(),
+                          ),
                           const Divider(),
-                          TextField(
+                          TextFieldWidget(
+                            hint: 'Куда - Турция',
+                            controller: TextEditingController(),
                             readOnly: true,
                             onTap: _showBottomSheet,
                           ),
