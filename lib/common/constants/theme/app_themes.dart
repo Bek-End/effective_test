@@ -11,12 +11,13 @@ abstract class AppThemes {
       useMaterial3: true,
       scaffoldBackgroundColor: colorSchemes.basic.shade0,
       textTheme: textTheme,
+      dividerTheme: DividerThemeData(color: colorSchemes.basic.shade1),
+      hintColor: colorSchemes.basic.shade6,
       appBarTheme: AppBarTheme(
         backgroundColor: colorSchemes.basic.shade0,
         titleTextStyle: textTheme.title1,
         iconTheme: IconThemeData(color: colorSchemes.basic.shade0),
       ),
-      dividerColor: colorSchemes.basic.shade4,
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: colorSchemes.basic,
       ),

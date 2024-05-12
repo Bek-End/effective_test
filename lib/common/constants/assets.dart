@@ -16,6 +16,7 @@ abstract class _AssetsHolder {
 class _Icons extends _AssetsHolder {
   const _Icons() : super('assets/icons');
 
+  String get add => '$_basePath/add.svg';
   String get airplaneUp => '$_basePath/airplane_up.svg';
   String get airplane => '$_basePath/airplane.svg';
   String get arrowLeft => '$_basePath/arrow_left.svg';

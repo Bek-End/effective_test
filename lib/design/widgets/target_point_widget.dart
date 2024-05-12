@@ -1,19 +1,28 @@
 import 'package:effective_test/common/constants/app_colors.dart';
 import 'package:effective_test/common/constants/assets.dart';
+import 'package:effective_test/design/screens/search_result_screen.dart';
 import 'package:effective_test/design/widgets/app_theme.dart';
+import 'package:effective_test/design/widgets/text_field_widget.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class TargetPointWidget extends StatelessWidget {
+class TargetPointWidget extends StatefulWidget {
   const TargetPointWidget({super.key});
 
-  static final _helperTargetPoints = [
+  @override
+  State<TargetPointWidget> createState() => _TargetPointWidgetState();
+}
+
+class _TargetPointWidgetState extends State<TargetPointWidget> {
+  late final _helperTargetPoints = [
     _HelperTargetPoint(
       label: 'Сложный маршрут',
       icon: Assets.icons.track,
       color: AppColors.green,
-      onTap: () {},
+      onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => const SearchResultScreen(),
+      )),
     ),
     _HelperTargetPoint(
       label: 'Куда угодно',
@@ -35,7 +44,7 @@ class TargetPointWidget extends StatelessWidget {
     ),
   ];
 
-  static final _helperTargetPoints2 = [
+  late final _helperTargetPoints2 = [
     _HelperTargetPoint(
       label: 'Стамбул',
       subTitle: 'Популярное направление',
@@ -67,31 +76,40 @@ class TargetPointWidget extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 24),
-          TextField(
-            decoration: InputDecoration(
-              prefixIcon: SvgPicture.asset(Assets.icons.airplaneUp),
-              prefixIconConstraints: const BoxConstraints(maxWidth: 24),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: colorScheme.basic.shade2,
+              borderRadius: BorderRadius.circular(16),
             ),
-          ),
-          const Divider(),
-          TextField(
-            decoration: InputDecoration(
-              prefixIconConstraints: const BoxConstraints(maxWidth: 24),
-              suffixIconConstraints: const BoxConstraints(maxWidth: 24),
-              prefixIcon: SvgPicture.asset(
-                Assets.icons.search,
-                colorFilter: ColorFilter.mode(
-                  colorScheme.basic.shadeF,
-                  BlendMode.srcIn,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFieldWidget(
+                  hint: 'Откуда - Москва',
+                  controller: TextEditingController(),
+                  prefixIcon: SvgPicture.asset(Assets.icons.airplaneUp),
                 ),
-              ),
-              suffixIcon: SvgPicture.asset(
-                Assets.icons.close,
-                colorFilter: ColorFilter.mode(
-                  colorScheme.basic.shadeF,
-                  BlendMode.srcIn,
+                const Divider(),
+                TextFieldWidget(
+                  hint: 'Куда - Турция',
+                  controller: TextEditingController(),
+                  prefixIcon: SvgPicture.asset(
+                    Assets.icons.search,
+                    colorFilter: ColorFilter.mode(
+                      colorScheme.basic.shadeF,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  suffixIcon: SvgPicture.asset(
+                    Assets.icons.close,
+                    colorFilter: ColorFilter.mode(
+                      colorScheme.basic.shadeF,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
           const SizedBox(height: 24),
