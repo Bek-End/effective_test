@@ -15,14 +15,12 @@ void main() async {
   await LocalRepository.init();
   DI.init();
 
-  runApp(
-    // BlocScope(
-    // child: DevicePreview(
-    //   enabled: true,
-    //   builder: (_) =>
-    const MyApp(),
-  );
-  // ));
+  runApp(BlocScope(
+    child: DevicePreview(
+      enabled: true,
+      builder: (_) => const MyApp(),
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {
