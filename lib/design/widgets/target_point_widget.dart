@@ -1,10 +1,11 @@
 import 'package:effective_test/common/constants/app_colors.dart';
 import 'package:effective_test/common/constants/assets.dart';
-import 'package:effective_test/design/screens/search_result_screen.dart';
+import 'package:effective_test/design/screens/temp_screen.dart';
 import 'package:effective_test/design/widgets/app_theme.dart';
 import 'package:effective_test/design/widgets/text_field_widget.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TargetPointWidget extends StatefulWidget {
@@ -15,32 +16,42 @@ class TargetPointWidget extends StatefulWidget {
 }
 
 class _TargetPointWidgetState extends State<TargetPointWidget> {
+  late final _countryFromCtrl = TextEditingController();
+  late final _countryToCtrl = TextEditingController();
+
+  final inputCyrillicFormat =
+      FilteringTextInputFormatter.allow(RegExp("[а-яА-Я]"));
+
   late final _helperTargetPoints = [
     _HelperTargetPoint(
       label: 'Сложный маршрут',
       icon: Assets.icons.track,
       color: AppColors.green,
       onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (_) => const SearchResultScreen(),
+        builder: (_) => const TempScreen(screenName: 'Сложный маршрут'),
       )),
     ),
     _HelperTargetPoint(
       label: 'Куда угодно',
       icon: Assets.icons.globe,
       color: AppColors.blue,
-      onTap: () {},
+      onTap: () => _setCountryToAndPop('Куда угодно'),
     ),
     _HelperTargetPoint(
       label: 'Выходные',
       icon: Assets.icons.calendar,
       color: AppColors.darkBlue,
-      onTap: () {},
+      onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => const TempScreen(screenName: 'Выходные'),
+      )),
     ),
     _HelperTargetPoint(
       label: 'Горячие билеты',
       icon: Assets.icons.fire,
       color: AppColors.red,
-      onTap: () {},
+      onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => const TempScreen(screenName: 'Горячие билеты'),
+      )),
     ),
   ];
 
@@ -49,21 +60,30 @@ class _TargetPointWidgetState extends State<TargetPointWidget> {
       label: 'Стамбул',
       subTitle: 'Популярное направление',
       icon: Assets.images.constImages2[0],
-      onTap: () {},
+      onTap: () => _setCountryToAndPop('Стамбул'),
     ),
     _HelperTargetPoint(
       label: 'Сочи',
       subTitle: 'Популярное направление',
       icon: Assets.images.constImages2[1],
-      onTap: () {},
+      onTap: () => _setCountryToAndPop('Сочи'),
     ),
     _HelperTargetPoint(
       label: 'Пхукет',
       subTitle: 'Популярное направление',
       icon: Assets.images.constImages2[2],
-      onTap: () {},
+      onTap: () => _setCountryToAndPop('Пхукет'),
     ),
   ];
+
+  void _clearToCountry() {
+    _countryToCtrl.clear();
+  }
+
+  void _setCountryToAndPop(String country) {
+    _countryToCtrl.text = 'Куда угодно';
+    Navigator.of(context).pop(country);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +107,13 @@ class _TargetPointWidgetState extends State<TargetPointWidget> {
               children: [
                 TextFieldWidget(
                   hint: 'Откуда - Москва',
-                  controller: TextEditingController(),
+                  controller: _countryFromCtrl,
                   prefixIcon: SvgPicture.asset(Assets.icons.airplaneUp),
                 ),
                 const Divider(),
                 TextFieldWidget(
                   hint: 'Куда - Турция',
-                  controller: TextEditingController(),
+                  controller: _countryToCtrl,
                   prefixIcon: SvgPicture.asset(
                     Assets.icons.search,
                     colorFilter: ColorFilter.mode(
@@ -101,11 +121,14 @@ class _TargetPointWidgetState extends State<TargetPointWidget> {
                       BlendMode.srcIn,
                     ),
                   ),
-                  suffixIcon: SvgPicture.asset(
-                    Assets.icons.close,
-                    colorFilter: ColorFilter.mode(
-                      colorScheme.basic.shadeF,
-                      BlendMode.srcIn,
+                  suffixIcon: InkWell(
+                    onTap: _clearToCountry,
+                    child: SvgPicture.asset(
+                      Assets.icons.close,
+                      colorFilter: ColorFilter.mode(
+                        colorScheme.basic.shadeF,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
                 ),
