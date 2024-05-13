@@ -1,12 +1,23 @@
 import 'package:effective_test/common/constants/assets.dart';
+import 'package:effective_test/common/utils/date_time_extentions.dart';
 import 'package:effective_test/design/widgets/app_theme.dart';
 import 'package:effective_test/design/widgets/ticket_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TicketsScreen extends StatelessWidget {
-  const TicketsScreen({super.key});
+  const TicketsScreen({
+    super.key,
+    required this.countryFrom,
+    required this.countryTo,
+    required this.departureDate,
+    required this.personCount,
+  });
+
+  final String countryFrom;
+  final String countryTo;
+  final DateTime departureDate;
+  final int personCount;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +48,12 @@ class TicketsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Москва-Сочи',
+                        '$countryFrom-$countryTo',
                         style: themeText.title3,
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '23 февраля, 1 пассажир',
+                        '${departureDate.inDDMMMM}, $personCount пассажир',
                         style: themeText.title4.copyWith(
                           color: colorScheme.basic.shade6,
                         ),

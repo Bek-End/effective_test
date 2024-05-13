@@ -20,6 +20,9 @@ class SearchResultScreen extends StatefulWidget {
 }
 
 class _SearchResultScreenState extends State<SearchResultScreen> {
+  late final _countryFromCtrl = TextEditingController();
+  late final _countryToCtrl = TextEditingController();
+
   final _iconColors = [
     AppColors.red,
     AppColors.blue,
@@ -31,6 +34,12 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
       context: context,
       content: const TargetPointWidget(),
     );
+  }
+
+  void _swapPlaces() {
+    final tempVar = _countryFromCtrl.text;
+    _countryFromCtrl.text = _countryToCtrl.text;
+    _countryToCtrl.text = tempVar;
   }
 
   @override
@@ -73,14 +82,16 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                         children: [
                           TextFieldWidget(
                             hint: 'Откуда - Москва',
-                            controller: TextEditingController(),
-                            suffixIcon:
-                                SvgPicture.asset(Assets.icons.swapUpDown),
+                            controller: _countryFromCtrl,
+                            suffixIcon: InkWell(
+                              onTap: _swapPlaces,
+                              child: SvgPicture.asset(Assets.icons.swapUpDown),
+                            ),
                           ),
                           const Divider(),
                           TextFieldWidget(
                             hint: 'Куда - Турция',
-                            controller: TextEditingController(),
+                            controller: _countryToCtrl,
                             suffixIcon: SvgPicture.asset(Assets.icons.close),
                             readOnly: true,
                             onTap: _showBottomSheet,
@@ -100,7 +111,13 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                 scrollDirection: Axis.horizontal,
                 children: [
                   RoundedButtonWidget(
-                    onTap: () {},
+                    onTap: () {
+                      showDatePicker(
+                        context: context,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.utc(3000),
+                      );
+                    },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -181,6 +198,8 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                     (index) => Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        if (index != 0)
+                          Divider(color: colorScheme.basic.shade4),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Row(
@@ -226,28 +245,21 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                             ],
                           ),
                         ),
-                        Divider(color: colorScheme.basic.shade4),
                       ],
                     ),
                   ),
-                  Center(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Показать все',
-                        style: themeText.buttonText.copyWith(
-                          color: colorScheme.blue,
-                        ),
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),
             const SizedBox(height: 23),
             FilledButtonWidget(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => const TicketsScreen(),
+                builder: (_) => TicketsScreen(
+                  countryFrom: _countryFromCtrl.text,
+                  countryTo: _countryToCtrl.text,
+                  departureDate: DateTime.now(),
+                  personCount: 1,
+                ),
               )),
               child: Text(
                 'Посмотреть все билеты',

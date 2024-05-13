@@ -1,5 +1,6 @@
 import 'package:effective_test/design/widgets/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget({
@@ -10,6 +11,7 @@ class TextFieldWidget extends StatelessWidget {
     this.onTap,
     this.prefixIcon,
     this.suffixIcon,
+    this.inputFormatters,
   });
 
   final String hint;
@@ -18,6 +20,7 @@ class TextFieldWidget extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,7 @@ class TextFieldWidget extends StatelessWidget {
       controller: controller,
       readOnly: readOnly,
       style: style,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         hintText: hint,
         helperStyle: style,

@@ -4,6 +4,7 @@ import 'package:effective_test/design/widgets/bottom_sheet_with_header.dart';
 import 'package:effective_test/design/widgets/target_point_widget.dart';
 import 'package:effective_test/design/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +15,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final _countryFromCtrl = TextEditingController();
+  late final _countryToCtrl = TextEditingController();
+
+  final inputCyrillicFormat =
+      FilteringTextInputFormatter.allow(RegExp("[а-яА-Я]"));
+
   void _showBottomSheet() {
     BottomSheetWithHeader.show(
       context: context,
@@ -69,12 +76,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           TextFieldWidget(
                             hint: 'Откуда - Москва',
-                            controller: TextEditingController(),
+                            controller: _countryFromCtrl,
+                            inputFormatters: [inputCyrillicFormat],
                           ),
                           const Divider(),
                           TextFieldWidget(
                             hint: 'Куда - Турция',
-                            controller: TextEditingController(),
+                            controller: _countryToCtrl,
+                            inputFormatters: [inputCyrillicFormat],
                             readOnly: true,
                             onTap: _showBottomSheet,
                           ),
