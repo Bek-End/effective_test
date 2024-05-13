@@ -27,21 +27,29 @@ final class TicketOffersState extends TicketState {
 final class TicketOfferTicketsState extends TicketState {
   const TicketOfferTicketsState({
     required this.ticketOffers,
+    required this.departureDate,
   });
 
   final List<TicketOfferEntity> ticketOffers;
+  final DateTime departureDate;
 
   @override
-  List<Object> get props => [...super.props, ticketOffers];
+  List<Object> get props => [...super.props, ticketOffers, departureDate];
 }
 
 final class TicketTicketsState extends TicketState {
   const TicketTicketsState({
     required this.tickets,
+    required this.countryFrom,
+    required this.countryTo,
+    required this.departureDate,
   });
 
   final List<TicketEntity> tickets;
+  final String countryFrom;
+  final String countryTo;
+  final DateTime departureDate;
 
   @override
-  List<Object> get props => [...super.props, tickets];
+  List<Object> get props => [...super.props, tickets, countryFrom, countryTo];
 }

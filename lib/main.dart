@@ -17,7 +17,7 @@ void main() async {
 
   runApp(BlocScope(
     child: DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (_) => const MyApp(),
     ),
   ));

@@ -12,6 +12,7 @@ part 'ticket_state.dart';
 class TicketBloc extends Bloc<TicketEvent, TicketState> {
   TicketBloc(this._ticketUsecase) : super(TicketLoadingState()) {
     on<TicketInitEvent>(_getOffers);
+    on<TicketChangeDepartureDateEvent>(_changeDepartureDate);
     on<TicketGetTicketOffersEvent>(_getTicketOffers);
     on<TicketGetTicketsEvent>(_getTickets);
   }
@@ -25,11 +26,21 @@ class TicketBloc extends Bloc<TicketEvent, TicketState> {
     try {
       offers.addAll(await _ticketUsecase.getOffers());
       lastCountryFrom = await _ticketUsecase.getLastCountryFrom();
-    } catch (_) {
+    } catch (e, s) {
+      print(s);
       showToast('Что то пошло не так. Повторите попытку позже');
     } finally {
       emit(TicketOffersState(offers: offers, lastCountryFrom: lastCountryFrom));
     }
+  }
+
+  void _changeDepartureDate(
+      TicketChangeDepartureDateEvent event, Emitter<TicketState> emit) {
+    final currState = state as TicketOfferTicketsState;
+    emit(TicketOfferTicketsState(
+      ticketOffers: currState.ticketOffers,
+      departureDate: event.date,
+    ));
   }
 
   void _getTicketOffers(
@@ -40,7 +51,10 @@ class TicketBloc extends Bloc<TicketEvent, TicketState> {
     } catch (_) {
       showToast('Что то пошло не так. Повторите попытку позже');
     } finally {
-      emit(TicketOfferTicketsState(ticketOffers: ticketOffers));
+      emit(TicketOfferTicketsState(
+        ticketOffers: ticketOffers,
+        departureDate: DateTime.now(),
+      ));
     }
   }
 
@@ -52,7 +66,12 @@ class TicketBloc extends Bloc<TicketEvent, TicketState> {
     } catch (_) {
       showToast('Что то пошло не так. Повторите попытку позже');
     } finally {
-      emit(TicketTicketsState(tickets: tickets));
+      emit(TicketTicketsState(
+        tickets: tickets,
+        countryFrom: event.countryFrom,
+        countryTo: event.countryTo,
+        departureDate: event.departureDate,
+      ));
     }
   }
 }
