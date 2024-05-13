@@ -1,11 +1,13 @@
 import 'package:effective_test/common/constants/app_colors.dart';
 import 'package:effective_test/common/constants/assets.dart';
+import 'package:effective_test/design/logic/ticket/ticket_bloc.dart';
 import 'package:effective_test/design/screens/temp_screen.dart';
 import 'package:effective_test/design/widgets/app_theme.dart';
 import 'package:effective_test/design/widgets/text_field_widget.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TargetPointWidget extends StatefulWidget {
@@ -16,6 +18,7 @@ class TargetPointWidget extends StatefulWidget {
 }
 
 class _TargetPointWidgetState extends State<TargetPointWidget> {
+  late final TicketBloc _ticketBloc;
   late final _countryFromCtrl = TextEditingController();
   late final _countryToCtrl = TextEditingController();
 
@@ -76,13 +79,20 @@ class _TargetPointWidgetState extends State<TargetPointWidget> {
     ),
   ];
 
+  @override
+  void initState() {
+    _ticketBloc = context.read<TicketBloc>();
+    super.initState();
+  }
+
   void _clearToCountry() {
     _countryToCtrl.clear();
   }
 
   void _setCountryToAndPop(String country) {
     _countryToCtrl.text = 'Куда угодно';
-    Navigator.of(context).pop(country);
+    Navigator.of(context).pop();
+    _ticketBloc.add(TicketGetTicketOffersEvent());
   }
 
   @override

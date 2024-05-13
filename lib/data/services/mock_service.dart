@@ -6,11 +6,11 @@ import 'package:retrofit/retrofit.dart';
 
 part 'mock_service.g.dart';
 
+Dio? _dio;
+
 @RestApi(baseUrl: 'https://run.mocky.io/v3')
 abstract class MockService {
-  factory MockService(Dio dio, {String? baseUrl}) {
-    return _MockService(dio, baseUrl: baseUrl);
-  }
+  factory MockService() => _MockService(_dio ??= Dio(BaseOptions()));
 
   @GET('/00727197-24ae-48a0-bcb3-63eb35d7a9de')
   Future<OfferModel> getAllOffers();

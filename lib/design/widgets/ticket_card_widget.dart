@@ -1,8 +1,19 @@
 import 'package:effective_test/design/widgets/app_theme.dart';
+import 'package:effective_test/domain/entities/ticket_entity.dart';
 import 'package:flutter/material.dart';
 
 class TicketCardWidget extends StatelessWidget {
-  const TicketCardWidget({super.key});
+  const TicketCardWidget({
+    super.key,
+    required this.ticket,
+  });
+
+  final TicketEntity ticket;
+
+  String flyTime() {
+    final diffDur = ticket.arrivalDate.difference(ticket.departureDate);
+    return (diffDur.inMinutes / 60).toStringAsFixed(1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +35,8 @@ class TicketCardWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (true) const SizedBox(height: 5),
-                Text('6 990 ₽ ', style: themeText.title1),
+                if (ticket.badge != null) const SizedBox(height: 5),
+                Text('${ticket.price} ₽ ', style: themeText.title1),
                 const SizedBox(height: 16),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,9 +60,9 @@ class TicketCardWidget extends StatelessWidget {
                     Expanded(
                       child: RichText(
                         text: TextSpan(
-                          text: '3.5ч в пути',
+                          text: '${flyTime()}ч в пути',
                           style: themeText.text2,
-                          children: true
+                          children: ticket.hasTransfer
                               ? [
                                   TextSpan(
                                     text: ' / ',
@@ -73,17 +84,19 @@ class TicketCardWidget extends StatelessWidget {
               ],
             ),
           ),
-          if (true)
+          if (ticket.badge != null)
             Positioned(
               top: -8,
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 2,
+                  horizontal: 10,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   color: colorScheme.blue,
                 ),
-                child: Text('Самый удобный', style: themeText.title4),
+                child: Text(ticket.badge!, style: themeText.title4),
               ),
             )
         ],
